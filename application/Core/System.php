@@ -25,16 +25,10 @@ class System
     public function start()
     {
 
-        if ( HTTP\Request::is_obtained('m', 'GET') )
-        {
-            $Module = filter_var($_GET['m'], FILTER_SANITIZE_STRING);
 
-            $this->Hook->get($Module);
-        }
-        else
-        {
-            $this->Hook->use_default();
-        }
+        $curRoute = HTTP\Router::current_route();
+
+        $this->Hook->get($curRoute['Module'], $curRoute['Item']);
 
     }
 

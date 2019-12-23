@@ -1,2 +1,3 @@
 <?php
-echo 'API index';
+
+echo 'Api index';

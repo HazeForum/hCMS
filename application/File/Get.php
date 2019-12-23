@@ -42,9 +42,9 @@ class Get {
 
     }
 
-   public function get_module(string $name)
+   public function get_module(string $name, string $item = 'index')
     {
-        $path = Path::get_real_path('{base}/src/modules/' . $name . '/index.php');
+        $path = Path::get_real_path('{base}/src/modules/' . $name . '/' . $item . '.php');
 
         if (file_exists($path))
             include_once $path;

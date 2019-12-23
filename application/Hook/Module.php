@@ -7,6 +7,7 @@ namespace Hook;
 
 use Core\Path;
 use File;
+use HTTP\Router;
 
 class Module
 {
@@ -24,8 +25,9 @@ class Module
 
     }
 
-    public function get(string $Module) : bool
+    public function get(string $Module, string $item) : bool
     {
+
         if ( !isset($this->Modules[$Module]) )
         {
             $this->FileGet->get_module('404');
@@ -33,7 +35,9 @@ class Module
             return false;
         }
 
-        $this->FileGet->get_module($Module);
+
+
+        $this->FileGet->get_module($Module, $item);
 
         return true;
     }
