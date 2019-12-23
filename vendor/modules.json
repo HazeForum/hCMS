@@ -1,0 +1,10 @@
+{
+  "api": {
+    "description": "Serviço de API",
+    "route": "/api"
+  },
+  "site": {
+    "description": "Para utilização de sites em geral",
+    "route": "/"
+  }
+}
