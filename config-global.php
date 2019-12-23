@@ -3,7 +3,7 @@
 define('CONFIG_GLOBAL', [
 
     "Url"  => [
-        "base"      => "localhost/haze-filmes-v1",
+        "base"      => "localhost/hCMS",
         "https"     => false,
     ],
 
