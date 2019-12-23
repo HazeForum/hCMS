@@ -24,8 +24,7 @@ class System
 
     public function start()
     {
-
-
+        
         $curRoute = HTTP\Router::current_route();
 
         $this->Hook->get($curRoute['Module'], $curRoute['Item']);

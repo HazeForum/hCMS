@@ -36,37 +36,49 @@ class Router
 
         $dirs = explode('/', $route);
 
+        $Hook = new Module();
+
+        $Modules = $Hook->getModules();
+
         if (count($dirs) == 1)
         {
-
-            $Hook = new Module();
-
-            $Modules = $Hook->getModules();
-
             ## Se for um módulo, ele inicia a index do modulo.
 
             if ( isset( $Modules[ $dirs[0] ] ) )
                 return [$dirs[0], 'index'];
 
-            return [ CONFIG_GLOBAL['Modules']['default_module'], $dirs[0] ];
+
+            ## Se for um endpoint em subdiretorio e sem arquivo especifico, acessa a index do arquivo.
+
+            return [ CONFIG_GLOBAL['Modules']['default_module'], $dirs[0] . '/index' ];
 
         }
 
 
 
-        $Item = $dirs[ count($dirs) -1 ]; # Item do endpoint
+        $Item = '';
 
-        $Endpoint = '';
+        $items_count = count($dirs) - 1;
 
-        # -2 pois o último é o item
+        $Endpoint = $dirs[0];
 
-        $endpoint_count = count($dirs) - 2;
+        for ($i = 1; $i < $items_count; $i++):
 
-        for ($i = 0; $i <= $endpoint_count; $i++):
-
-            $Endpoint .= $dirs[$i] . ( $i == $endpoint_count ? '' : '/');
+            $Item .= $dirs[$i] . ( $i == $items_count ? '' : '/');
 
         endfor;
+
+        $Item .= $dirs[ $items_count ];
+
+
+        ## Se o endpoint não for modulo, ele vai para o default
+
+        if ( !isset($Modules[$Endpoint]) )
+        {
+            $Item = $Endpoint . DS . $Item;
+            $Endpoint = CONFIG_GLOBAL['Modules']['default_module'];
+        }
+
 
 
         return [ $Endpoint, $Item ];
