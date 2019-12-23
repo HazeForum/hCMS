@@ -11,7 +11,7 @@ class System
 {
 
     public $baseUrl;
-    private $Modules;
+    private $Hook;
 
     public function __construct()
     {
@@ -19,13 +19,22 @@ class System
 
         $this->set_constants();
 
-        $this->Modules = new Hook\Module();
+        $this->Hook = new Hook\Module();
     }
 
     public function start()
     {
 
+        if ( HTTP\Request::is_obtained('m', 'GET') )
+        {
+            $Module = filter_var($_GET['m'], FILTER_SANITIZE_STRING);
 
+            $this->Hook->get($Module);
+        }
+        else
+        {
+            $this->Hook->use_default();
+        }
 
     }
 

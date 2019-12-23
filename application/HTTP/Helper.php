@@ -7,7 +7,7 @@ namespace HTTP;
 class Helper
 {
 
-    public static function get_base_url()
+    public static function get_base_url() : string
     {
         $link = CONFIG_GLOBAL['Url']['https'] ? 'https://' : 'http://';
 
@@ -16,7 +16,7 @@ class Helper
         return $link;
     }
 
-    public static function get_current_url()
+    public static function get_current_url() : string
     {
         $link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http");
 
