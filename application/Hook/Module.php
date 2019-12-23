@@ -5,8 +5,8 @@ namespace Hook;
 
 
 
+use Core\Path;
 use File;
-use JsonException;
 
 class Module
 {
@@ -46,6 +46,22 @@ class Module
 
             exit;
         }
+
+        $this->use_default();
+
+    }
+
+    private function use_default()
+    {
+
+        $default = CONFIG_GLOBAL['Modules']['default_module'];
+
+        if ( !isset($this->Modules[$default]) )
+            return false;
+
+        $Module = $this->Modules[$default];
+
+        $this->FileGet->get_module($default);
 
     }
 

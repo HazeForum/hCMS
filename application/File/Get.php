@@ -33,12 +33,23 @@ class Get {
 
         if (empty($this->directory)) return false;
 
-        $fulldir = $this->directory . $item;
+        $fulldir = Path::get_real_path($this->directory . $item);
 
         if (!file_exists($fulldir))
             return false;
 
         return file_get_contents($fulldir);
+
+    }
+
+   public function get_module(string $name)
+    {
+        $path = Path::get_real_path('{base}/src/modules/' . $name . '/index.php');
+
+        if (file_exists($path))
+            include_once $path;
+
+        else return false;
 
     }
 
