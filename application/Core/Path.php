@@ -16,7 +16,7 @@ class Path
 
         // Primeiramente substituir a base do diretório
 
-        $real_path = str_replace('{base}/', CONFIG_GLOBAL['Core']['base_dir'], $path);
+        $real_path = str_replace('{base}', CONFIG_GLOBAL['Core']['base_dir'], $path);
 
         // Substituir barras por DIRECTORY SEPARATOR, para evitar problemas
 
