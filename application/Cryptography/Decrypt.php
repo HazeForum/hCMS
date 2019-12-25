@@ -14,9 +14,13 @@ class Decrypt
     private $method = 'aes-256-cbc';
 
 
-    public function aes()
+    public function aes($cipher = '')
     {
-        $mix = base64_decode($this->cipher);
+
+        if (empty($cipher))
+            $cipher = $this->cipher;
+
+        $mix = base64_decode($cipher);
 
         $iv_length = openssl_cipher_iv_length($this->method);
 
