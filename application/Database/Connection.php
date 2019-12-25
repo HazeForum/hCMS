@@ -14,7 +14,7 @@ class Connection
 
     private $DATA = CONFIG_GLOBAL['Database'];
 
-    private $conn;
+    public $conn;
 
     public $error;
 
@@ -23,17 +23,6 @@ class Connection
 
         $this->create_connection();
 
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getConn()
-    {
-        if (!empty($this->error))
-            return false;
-
-        return $this->conn;
     }
 
     private function create_connection() : void
