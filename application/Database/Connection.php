@@ -21,13 +21,6 @@ class Connection
     public function __construct()
     {
 
-        $this->create_connection();
-
-    }
-
-    private function create_connection() : void
-    {
-
         try
         {
 

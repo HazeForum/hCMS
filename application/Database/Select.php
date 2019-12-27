@@ -48,15 +48,11 @@ class Select implements DbTemplate
 
     public function setAttribute(string $attr, string $value)
     {
-        // TODO: Implement setAttribute() method.
-
         $this->attr[$attr] = $value;
     }
 
     public function generateQuery()
     {
-        // TODO: Implement generateQuery() method.
-
         if (empty($this->data))
             $this->data = '*';
 
