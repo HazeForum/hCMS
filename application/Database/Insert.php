@@ -43,6 +43,8 @@ class Insert extends Connection implements DbTemplate
             $this->setAttribute('', $value);
         }
 
+
+
         // Tira a ultima virgula
 
         $this->values = substr($aux, 0, -1);
@@ -89,7 +91,7 @@ class Insert extends Connection implements DbTemplate
     {
         if (empty($attr))
             $this->attr[] = $value;
-
-        $this->attr[$attr] = $value;
+        else
+            $this->attr[$attr] = $value;
     }
 }
