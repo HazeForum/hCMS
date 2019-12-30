@@ -13,7 +13,7 @@ class Data
     private $data;
     private $error;
 
-    public function set_method(string $method)
+    public function set_method(string $method) : void
     {
         $method = strtoupper($method);
 
@@ -24,7 +24,7 @@ class Data
 
     }
 
-    public function require_values(array $values)
+    public function require_values(array $values) : void
     {
         $this->data[] = $values;
     }
@@ -37,7 +37,7 @@ class Data
         return $_GET;
     }
 
-    public function all_values_is_obtained()
+    public function all_values_is_obtained() : bool
     {
         $method = $this->get_method();
         foreach ($this->data as $item)

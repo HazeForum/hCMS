@@ -6,10 +6,10 @@ namespace Database;
 
 use PDO;
 
-class Select implements DbTemplate
+class Select extends Connection implements DbTemplate
 {
 
-    private $conn;
+    private const defaultLimit = 20;
     private $attr;
     private $query;
 
@@ -21,16 +21,16 @@ class Select implements DbTemplate
 
     public function __construct()
     {
-
-        $_ = new Connection();
-        $this->conn = $_->conn;
-
+        parent::__construct();
     }
 
     public function get()
     {
 
         $this->generateQuery();
+
+        if (!empty($this->error))
+            return false;
 
         $stmt = $this->conn->prepare($this->query);
 
@@ -59,10 +59,7 @@ class Select implements DbTemplate
         $query = 'SELECT ' . $this->data . ' FROM ';
 
         if (empty($this->table))
-        {
             $this->error = 'Empty table';
-            return false;
-        }
 
         $query .= $this->table . ' ';
 
@@ -72,9 +69,9 @@ class Select implements DbTemplate
         if (empty($this->limit))
         {
             if (!is_int($this->limit))
-                $this->limit = 10;
+                $this->limit = self::defaultLimit;
 
-            $this->limit = 10;
+            $this->limit = self::defaultLimit;
         }
 
         $query .= 'LIMIT ' . $this->limit;
