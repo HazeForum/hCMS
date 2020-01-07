@@ -10,10 +10,10 @@ class Request
     public static function is_obtained(string $name, string $method = 'GET') : bool
     {
 
-        if (strtoupper($method) == 'GET')
-            $req = $_GET;
-        else
+        if (strtoupper($method) == 'POST')
             $req = $_POST;
+        else
+            $req = $_GET;
 
 
         if (isset( $req[$name] ) )

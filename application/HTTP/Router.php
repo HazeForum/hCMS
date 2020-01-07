@@ -19,8 +19,6 @@ class Router
 
             $route = self::generate($route);
 
-            //var_dump($route);
-
             return ["Module" => $route[0], "Item" => $route[1]];
 
         }
