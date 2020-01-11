@@ -23,5 +23,13 @@ class Request
         return false;
 
     }
+
+    public static function get_header($name = '')
+    {
+        if (!empty($name))
+            return ( isset(getallheaders()[$name]) ? getallheaders()[$name] : false);
+
+        return getallheaders();
+    }
     
 }
