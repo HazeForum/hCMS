@@ -37,6 +37,26 @@ class JWT
         return $Token;
     }
 
+    public static function token_is_valid(string $token) : bool
+    {
+        $dataToken = self::get_token_data($token);
+
+        if (!$dataToken)
+            return false;
+
+        if ($dataToken['headers']['expires'] < time())
+            return false;
+
+        if ($dataToken['headers']['created'] > $dataToken['headers']['expires'])
+            return false;
+
+        if (count($dataToken['payloads']) < 1)
+            return false;
+
+        return true;
+
+    }
+
     public static function get_token_data(string $token)
     {
 
