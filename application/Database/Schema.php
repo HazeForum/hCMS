@@ -4,6 +4,7 @@
 namespace Database;
 
 
+use Core\Path;
 use Exception;
 use PDOException;
 
@@ -15,6 +16,26 @@ class Schema extends Connection
     public function __construct()
     {
         parent::__construct();
+    }
+
+    public function execute_sql_file(string $dir, string $filename) : bool
+    {
+
+        if (!strpos($filename, '.sql'))
+            $filename .= '.sql';
+
+        $file = Path::get_real_path($dir . $filename);
+
+        if (!file_exists($file))
+        {
+            $this->error = 'Path not found';
+
+            return false;
+        }
+
+        $sql = file_get_contents($file);
+
+        return $this->exec($sql);
     }
 
     public function drop(string $tableName) : bool
@@ -56,18 +77,7 @@ class Schema extends Connection
 
         $query = "CREATE TABLE $tableName ( $opts )";
 
-        try
-        {
-            $stmt = $this->conn->exec($query);
-
-            return !$stmt ? false : true;
-        }
-        catch (PDOException $e)
-        {
-            $this->error = $e->getMessage();
-
-            return false;
-        }
+        return $this->exec($query);
 
     }
 
@@ -79,6 +89,22 @@ class Schema extends Connection
     public static function get_all_tables()
     {
         // TODO
+    }
+
+    private function exec(string $sql) : bool
+    {
+        try
+        {
+            $stmt = $this->conn->exec($sql);
+        }
+        catch (PDOException $e)
+        {
+            $this->error = $e->getMessage();
+
+            return false;
+        }
+
+        return !$stmt ? false : true;
     }
 
 }
