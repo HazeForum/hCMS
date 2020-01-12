@@ -44,7 +44,7 @@ class Get {
 
    public function get_module(string $name, string $item = 'index')
     {
-        $path = Path::get_real_path('{base}/src/modules/' . $name . '/' . $item . '.php');
+        $path = Path::get_real_path('{base}/public/' . $name . '/' . $item . '.php');
 
         if (file_exists($path))
             include_once $path;
