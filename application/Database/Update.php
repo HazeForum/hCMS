@@ -4,31 +4,29 @@
 namespace Database;
 
 
-class Delete extends Connection implements DbTemplate
+class Update extends Connection implements DbTemplate
 {
 
     public $table;
-    public $where;
+    public $data;
     public $noWhere;
+    public $where;
     public $error;
     private $attr;
 
     public function __construct()
     {
         parent::__construct();
-
         $this->noWhere = false;
     }
 
     public function execute() : bool
     {
 
-        $query = $this->generateQuery();
+        $stmt = $this->conn->prepare( $this->generateQuery() );
 
         if (!empty($this->error))
             return false;
-
-        $stmt = $this->conn->prepare($query);
 
         foreach ($this->attr as $key => $value)
         {
@@ -37,24 +35,21 @@ class Delete extends Connection implements DbTemplate
             $stmt->bindParam($key, $value);
         }
 
-            return $stmt->execute();
+        return $stmt->execute();
+
     }
 
-    public function generateQuery() : string
+    public function generateQuery()
     {
-        $query = 'DELETE FROM ';
-
-        if (empty($this->table))
-            $this->error = 'No table given';
+        $query = "UPDATE {$this->table} SET {$this->data}";
 
         if (empty($this->where))
             if (!$this->noWhere)
-                $this->error = 'DELETE with no Where Clause and noWhere false ';
+                $this->error = 'Empty where clause with false no-where';
 
         $query .= "{$this->table} " . (empty($this->where) ? '' : "WHERE {$this->where}");
 
         return $query;
-
     }
 
     public function setAttribute(string $attr, string $value)
